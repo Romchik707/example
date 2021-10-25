@@ -38,7 +38,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'password' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
         ]);
         $frd = $request->all();
         //dd($frd);
@@ -65,11 +65,6 @@ class UserController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function closeshow()
-    {
-        return redirect()->route('users.index');
-        //просмотр определенной записи
-    }
 
     /**
      * @param Request $request

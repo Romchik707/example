@@ -3,9 +3,7 @@
     <input name="{{$name}}" value="{{$value??''}}" type="{{$type??'string'}}"
            class="form-control" id="exampleInputEmail1"
            aria-describedby="emailHelp" placeholder="{{$placeholder??''}}">
-    @error($name)
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
+    @if($errors->has($name) === true)
+        <div class="text-danger small">{{ $errors->first($name) }}</div>
+    @endif
 </div>

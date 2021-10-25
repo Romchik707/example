@@ -25,6 +25,10 @@ Route::get('/discord', [App\Http\Controllers\DiscordController::class, 'index'])
 
 Route::resource('users', App\Http\Controllers\UserController::class);
 
+Route::resource('products', App\Http\Controllers\ProductController::class);
+
+Route::resource('product-categories', App\Http\Controllers\ProductCategoryController::class);
+
 //Route::get('/users', 'UserController@index')->name('users.index');
 //Route::get('/users/create', 'UserController@create')->name('users.create');
 //Route::get('/users/{user}', 'UserController@edit')->name('users.edit');
