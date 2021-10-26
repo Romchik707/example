@@ -3,83 +3,112 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
+        $products = Product::get();
+
+        return view('products.index', compact('products'));
         //
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
+        $productCategories = ProductCategory::get();
+
+        return view('products.create', compact('productCategories'));
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'        => 'required',
+            'description' => 'required',
+            'price'       => 'required',
+            'category_id' => 'required',
+        ]);
+        $frd = $request->all();
+        //dd($frd);
+        //$productCategory = ProductCategory::create($frd);
+        $product = new Product($frd);
+        $product->save();
+        return redirect()->route('products.index');
+        //запись в базу данных при создании
         //
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Request $request, Product $product)
     {
+        return view('products.show', compact('product'));
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, Product $product)
     {
+        $productCategories = ProductCategory::get();
+
+        return view('products.edit', compact('product', 'productCategories'));
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
+        $frd = $request->all();
+        //dd($frd);
+        $product->update([
+            'name'        => $frd['name'] ?? '',
+            'description' => Arr::get($frd, 'description'),
+            'price'       => Arr::get($frd, 'price'),
+            'category_id' => Arr::get($frd, 'category_id'),
+            'image_id'    => Arr::get($frd, 'image_id'),
+        ]);
+        return redirect()->route('products.index');
+        //обновление пользователя
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request, Product $product)
     {
+        $frd = $request->all();
+        //dd($frd);
+        $product->delete();
+        return redirect()->back();
         //
     }
 }

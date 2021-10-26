@@ -21,11 +21,13 @@ class ProductCategoryController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
-        return view('product-categories.create');
+        $productCategories = ProductCategory::get();
+        return view('product-categories.create', compact('productCategories'));
         //
     }
 
@@ -35,6 +37,7 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'slug' => 'required',
@@ -49,10 +52,9 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Request $request, ProductCategory $productCategory)
     {
@@ -65,23 +67,21 @@ class ProductCategoryController extends Controller
      */
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Request $request, ProductCategory $productCategory)
     {
-        return view('product-categories.edit', compact('productCategory'));
+        $productCategories = ProductCategory::get();
+        return view('product-categories.edit', compact('productCategory', 'productCategories'));
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, ProductCategory $productCategory)
     {

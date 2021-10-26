@@ -29,7 +29,7 @@ class ProductCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'product-categories';
+    protected $table = 'product_categories';
     protected $fillable = [
         'name',
         'slug',

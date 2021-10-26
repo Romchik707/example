@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Создание продукта') }}</div>
+                    <div class="card-header">{{ __('Создание категории') }}</div>
 
                     <div class="card-body">
                         {{Form::open(['url'=>route('product-categories.store'), 'method'=>'POST'])}}

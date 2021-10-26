@@ -11,38 +11,34 @@
                     <div class="col">
                         Имя
                     </div>
-{{--                    <div class="col">--}}
-{{--                        Пароль--}}
-{{--                    </div>--}}
                     <div class="col">
-                        Почта
+                        Цена
                     </div>
                     <div class="col">
-                        Дата создания
+                        Категория
+                    </div>
+                    <div class="col">
+                        Фото
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        {{$user->getKey()}}
+                        {{$product->getName()}}
                     </div>
                     <div class="col">
-                        {{$user->getName()}}
-                    </div>
-{{--                    <div class="col">--}}
-{{--                        {{$user->password}}--}}
-{{--                    </div>--}}
-                    <div class="col">
-                        {{$user->getEmail()}}
+                        {{$product->getDescription()}}
                     </div>
                     <div class="col">
-                        {{$user->getCreatedAt()}}
+                        {{$product->getPrice()}}
+                    </div>
+                    <div class="col">
+                        {{$product->getCategoryId()}}
+                    </div>
+                    <div class="col">
+                        {{$product->getImageId()}}
                     </div>
                 </div>
-                <a href="{{route('users.index')}}}"></a>
-{{--                {{Form::model($user, ['url'=>route('users.index', $user), 'method'=>'GET'])}}--}}
-{{--                --}}
-{{--                <button class="btn btn-success">Закрыть</button>--}}
-{{--                {{Form::close()}}--}}
+                <a href="{{route('products.index')}}}"></a>
             </div>
         </div>
     </div>

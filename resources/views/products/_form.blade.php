@@ -1,31 +1,29 @@
 @include('forms._input', [
-	'label'=>'Название',
+	'label'=>'Имя',
 	'name'=>'name',
-	'value'=>/*isset($user) ? $user->getName() : */'',
+	'value'=>isset($product) ? $product->getName() : '',
 ])
 
 @include('forms._input', [
 	'label'=>'Описание',
-	'name'=>'email',
-	'type'=>'email',
-	'value'=>'',
-	'placeholder'=>'test@test.test',
+	'name'=>'description',
+	'value'=>isset($product) ? $product->getDescription() : '',
 ])
 
 @include('forms._input', [
 	'label'=>'Цена',
-	'name'=>'password',
-	'value'=>'',
+	'name'=>'price',
+	'value'=>isset($product) ? $product->getPrice() : '',
 ])
 
-@include('forms._input', [
+@include('forms._select', [
 	'label'=>'Категория',
-	'name'=>'password',
-	'value'=>'',
+	'name'=>'category_id',
+	'elements'=>$productCategories,
 ])
 
 @include('forms._input', [
 	'label'=>'Фото',
-	'name'=>'password',
-	'value'=>'',
+	'name'=>'image_id',
+	'value'=>isset($product) ? $product->getImageId() : '',
 ])

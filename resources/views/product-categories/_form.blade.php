@@ -10,8 +10,8 @@
 	'value'=>isset($productCategory) ? $productCategory->getSlug() : '',
 ])
 
-@include('forms._input', [
+@include('forms._select', [
 	'label'=>'Родительская категория',
 	'name'=>'parent_category_id',
-	'value'=>isset($productCategory) ? $productCategory->getParentCategoryId() : '',
+	'elements'=>$productCategories,
 ])

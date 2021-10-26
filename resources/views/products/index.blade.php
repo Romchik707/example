@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="row justify-content-end">
                     <div class="col-auto">
-                        <a href="{{route('users.create')}}" class="btn btn-success">
+                        <a href="{{route('products.create')}}" class="btn-success-roma">
                             Создать
                         </a>
                     </div>
