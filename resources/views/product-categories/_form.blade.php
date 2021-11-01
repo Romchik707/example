@@ -13,5 +13,6 @@
 @include('forms._select', [
 	'label'=>'Родительская категория',
 	'name'=>'parent_category_id',
+    'value'=>isset($productCategory) ? $productCategory->getParentCategory()->getName() : '',
 	'elements'=>$productCategories,
 ])

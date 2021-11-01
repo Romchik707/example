@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\ProductCategory|null $parentCategory
+ * @property-read \App\Models\ProductCategory|null $childCategories
  */
 class ProductCategory extends Model
 {
@@ -35,6 +37,26 @@ class ProductCategory extends Model
         'slug',
         'parent_category_id',
     ];
+
+    public function parentCategory(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ProductCategory::class, 'parent_category_id');
+    }
+
+    public function getParentCategory(): ProductCategory
+    {
+        return $this->parentCategory;
+    }
+
+//    public function childCategories(): HasMany
+//    {
+//        return $this->hasMany(ProductCategory::class, 'id');
+//    }
+//
+//    public function getChildCategories(): ProductCategory
+//    {
+//        return $this->childCategories;
+//    }
 
     public static function getList(): array
     {

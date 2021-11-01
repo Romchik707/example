@@ -46,7 +46,11 @@ class ProductCategoryController extends Controller
         //dd($frd);
         //$productCategory = ProductCategory::create($frd);
         $productCategory = new ProductCategory($frd);
-        $productCategory->save();
+        $productCategory->save([
+            'name'               => $frd['name'],
+            'slug'               => Str::slug(Arr::get($frd, 'name')),
+            'parent_category_id' => Arr::get($frd, 'parent_category_id'),
+        ]);
         return redirect()->route('product-categories.index');
         //запись в базу данных при создании
     }
@@ -89,7 +93,7 @@ class ProductCategoryController extends Controller
         //dd($frd);
         $productCategory->update([
             'name'               => $frd['name'] ?? '',
-            'slug'               => Arr::get($frd, 'slug'),
+            'slug'               => Str::slug(Arr::get($frd, 'name')),
             'parent_category_id' => Arr::get($frd, 'parent_category_id'),
         ]);
         return redirect()->route('product-categories.index');
