@@ -12,11 +12,13 @@ class ProductController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::get();
+        $frd = $request->all();
+        //dd($frd);
+        $products = Product::filter($frd)->get();
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'frd'));
         //
     }
 

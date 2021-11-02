@@ -29,6 +29,10 @@ Route::resource('products', App\Http\Controllers\ProductController::class);
 
 Route::resource('product-categories', App\Http\Controllers\ProductCategoryController::class);
 
+Route::resource('roles', App\Http\Controllers\RoleController::class);
+
+Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+
 //Route::get('/users', 'UserController@index')->name('users.index');
 //Route::get('/users/create', 'UserController@create')->name('users.create');
 //Route::get('/users/{user}', 'UserController@edit')->name('users.edit');

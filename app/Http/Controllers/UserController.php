@@ -10,14 +10,16 @@ use function React\Promise\all;
 class UserController extends Controller
 {
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
+        $frd = $request->all();
         //просмотр всех записей
-        $users = User::get();
+        $users = User::filter($frd)->get();
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'frd'));
     }
 
     /**
@@ -36,9 +38,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name'     => 'required',
             'password' => 'required',
-            'email' => 'required|unique:users',
+            'email'    => 'required|unique:users',
         ]);
         $frd = $request->all();
         //dd($frd);
@@ -86,9 +88,9 @@ class UserController extends Controller
         $frd = $request->all();
         //dd($frd);
         $user->update([
-            'name'=>$frd['name'] ?? '',
-            'email'=>Arr::get($frd, 'email'),
-            'password'=>Arr::get($frd, 'password'),
+            'name'     => $frd['name'] ?? '',
+            'email'    => Arr::get($frd, 'email'),
+            'password' => Arr::get($frd, 'password'),
         ]);
         return redirect()->route('users.index');
         //обновление пользователя

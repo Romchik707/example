@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
 {
@@ -14,10 +15,11 @@ class ProductCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $frd = $request->all();
         //
-        $productCategories = ProductCategory::get();
+        $productCategories = ProductCategory::filter($frd)->get();
 
-        return view('product-categories.index', compact('productCategories'));
+        return view('product-categories.index', compact('productCategories', 'frd'));
     }
 
     /**
@@ -40,7 +42,6 @@ class ProductCategoryController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'slug' => 'required',
         ]);
         $frd = $request->all();
         //dd($frd);

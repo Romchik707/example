@@ -4,6 +4,18 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="col-auto">
+                    {{Form::open(['url'=>route('product-categories.index'), 'method'=>'GET'])}}
+                    @include('forms._input', [
+'label'=>'Поиск',
+'name'=>'search',
+'value'=>$frd['search'] ?? '',
+])
+                    <button class="btn btn-success">
+                        Искать
+                    </button>
+                    {{Form::close()}}
+                </div>
                 <div class="row justify-content-end">
                     <div class="col-auto">
                         <a href="{{route('product-categories.create')}}" class="btn btn-success">

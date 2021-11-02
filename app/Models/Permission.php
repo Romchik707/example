@@ -3,43 +3,41 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Laratrust\Models\LaratrustPermission;
 
 /**
- * App\Models\ProductCategory
+ * App\Models\Permission
  *
  * @property int $id
  * @property string $name
- * @property string $slug
- * @property int|null $parent_category_id
+ * @property string|null $display_name
+ * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereParentCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \App\Models\ProductCategory|null $parentCategory
- * @property-read \App\Models\ProductCategory|null $childCategories
- * @property-read int|null $child_categories_count
  */
-class ProductCategory extends Model
+class Permission extends LaratrustPermission
 {
-    use HasFactory;
-
-    protected $table = 'product_categories';
+    protected $table = 'permissions';
 
     protected $fillable = [
         'name',
-        'slug',
-        'parent_category_id',
+        'display_name',
+        'description',
     ];
+
+    public $guarded = [];
 
     /**
      * @param Builder $query
@@ -82,59 +80,6 @@ class ProductCategory extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function parentCategory(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(ProductCategory::class, 'parent_category_id');
-    }
-
-    /**
-     * @return ProductCategory
-     */
-    public function getParentCategory(): ProductCategory
-    {
-        return $this->parentCategory;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function childCategories(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(ProductCategory::class, 'id');
-    }
-
-    /**
-     * @return ProductCategory
-     */
-    public function getChildCategories(): ProductCategory
-    {
-        return $this->childCategories;
-    }
-
-    public static function getList(): array
-    {
-        return self::pluck('name','id');
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFillable(): array
-    {
-        return $this->fillable;
-    }
-
-    /**
-     * @param string[] $fillable
-     */
-    public function setFillable(array $fillable): void
-    {
-        $this->fillable = $fillable;
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -151,37 +96,35 @@ class ProductCategory extends Model
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getDisplayName(): ?string
     {
-        $sluggin = 'http://example.test/product-categories/' . $this->name;
-        $sluged = str_slug($sluggin);
-        return $sluged;
+        return $this->display_name;
     }
 
     /**
-     * @param string $slug
+     * @param string|null $display_name
      */
-    public function setSlug(string $slug): void
+    public function setDisplayName(?string $display_name): void
     {
-        $this->slug = $slug;
+        $this->display_name = $display_name;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getParentCategoryId(): ?int
+    public function getDescription(): ?string
     {
-        return $this->parent_category_id;
+        return $this->description;
     }
 
     /**
-     * @param int|null $parent_category_id
+     * @param string|null $description
      */
-    public function setParentCategoryId(?int $parent_category_id): void
+    public function setDescription(?string $description): void
     {
-        $this->parent_category_id = $parent_category_id;
+        $this->description = $description;
     }
 
     /**
@@ -193,10 +136,18 @@ class ProductCategory extends Model
     }
 
     /**
-     * @param \Illuminate\Support\Carbon|null $created_at
+     * @return \Illuminate\Support\Carbon|null
      */
-    public function setCreatedAt($created_at): void
+    public function getUpdatedAt(): ?\Illuminate\Support\Carbon
     {
-        $this->created_at = $created_at;
+        return $this->updated_at;
+    }
+
+    /**
+     * @return Role[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }
