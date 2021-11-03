@@ -31,6 +31,19 @@ Route::resource('product-categories', App\Http\Controllers\ProductCategoryContro
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 
+Route::middleware(['role:admin', 'auth'])
+    ->name('crm.')
+    ->prefix('crm')
+    ->group(static function () {
+        Route::get('/', [App\Http\Controllers\CRM\CrmController::class, 'index'])->name('home');
+        Route::resource('/users', App\Http\Controllers\CRM\Users\UserController::class);
+        Route::resource('/info', App\Http\Controllers\CRM\InfoController::class);
+        Route::resource('/events', App\Http\Controllers\CRM\EventController::class);
+        Route::resource('/event-types', App\Http\Controllers\CRM\EventTypeController::class);
+        Route::resource('/locations', App\Http\Controllers\CRM\LocationController::class);
+        Route::resource('/pages', App\Http\Controllers\CRM\PageController::class);
+    });
+
 Route::resource('permissions', App\Http\Controllers\PermissionController::class);
 
 //Route::get('/users', 'UserController@index')->name('users.index');

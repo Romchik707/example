@@ -4,22 +4,26 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                    <div class="col-auto">
-                        {{Form::open(['url'=>route('roles.index'), 'method'=>'GET'])}}
-                        @include('forms._input', [
-    'label'=>'Поиск',
-    'name'=>'search',
-    'value'=>$frd['search'] ?? '',
-    ])
-                        <button class="btn btn-success">
-                            Искать
-                        </button>
-                        {{Form::close()}}
+                <div class="row">
+                    {{Form::open(['url'=>route('roles.index'), 'method'=>'GET', 'class'=>'col'])}}
+                    <div class="row">
+                        <div class="col">
+                            @include('forms._input', [
+        'name'=>'search',
+        'value'=>$frd['search'] ?? '',
+        'placeholder'=>'Поиск',
+        ])
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                <div class="row justify-content-end">
-                    <div class="col-auto">
-                        <a href="{{route('roles.create')}}" class="btn btn-success">
-                            Создать
+                    {{Form::close()}}
+                    <div class="col">
+                        <a href="{{route('roles.index')}}" class="btn btn-success">
+                            <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
@@ -33,16 +37,16 @@
                         </div>
                         <div class="col-5">
                             <a href="{{route('roles.edit', $role)}}" class="btn btn-success">
-                                Редактировать
+                                <i class="far fa-edit"></i>
                             </a>
                             {{Form::open(['method'=>'DELETE', 'url'=>route('roles.destroy', $role)])}}
 
                             <button class="btn btn-danger">
-                                Удалить
+                                <i class="fas fa-trash-alt"></i>
                             </button>
                             {{Form::close()}}
                             <a href="{{route('roles.show', $role)}}" class="btn btn-info">
-                                Просмотр
+                                <i class="fas fa-eye"></i>
                             </a>
                         </div>
                     </div>

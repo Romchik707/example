@@ -4,22 +4,26 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                    <div class="col-auto">
-                        {{Form::open(['url'=>route('users.index'), 'method'=>'GET'])}}
-                        @include('forms._input', [
-    'label'=>'Поиск',
-    'name'=>'search',
-    'value'=>$frd['search'] ?? '',
-    ])
-                        <button class="btn btn-success">
-                            Искать
-                        </button>
-                        {{Form::close()}}
+                <div class="row">
+                    {{Form::open(['url'=>route('users.index'), 'method'=>'GET', 'class'=>'col'])}}
+                    <div class="row">
+                        <div class="col">
+                            @include('forms._input', [
+        'name'=>'search',
+        'value'=>$frd['search'] ?? '',
+        'placeholder'=>'Поиск',
+        ])
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                <div class="row justify-content-end">
-                    <div class="col-auto">
-                        <a href="{{route('users.create')}}" class="btn btn-success">
-                            Создать
+                    {{Form::close()}}
+                    <div class="col">
+                        <a href="{{route('users.index')}}" class="btn btn-success">
+                            <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
@@ -33,16 +37,16 @@
                         </div>
                         <div class="col-5">
                             <a href="{{route('users.edit', $user)}}" class="btn btn-success">
-                                Редактировать
+                                <i class="far fa-edit"></i>
                             </a>
                             {{Form::open(['method'=>'DELETE', 'url'=>route('users.destroy', $user)])}}
 
                             <button class="btn btn-danger">
-                                Удалить
+                                <i class="fas fa-trash-alt"></i>
                             </button>
                             {{Form::close()}}
                             <a href="{{route('users.show', $user)}}" class="btn btn-info">
-                                Просмотр
+                                <i class="fas fa-eye"></i>
                             </a>
                         </div>
                     </div>
