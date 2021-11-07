@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use function React\Promise\all;
@@ -27,7 +28,8 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        return view('users.create');
+        $roles = Role::get();
+        return view('users.create', compact('roles'));
         //страница с полями ввода для создания
     }
 
@@ -71,10 +73,12 @@ class UserController extends Controller
     /**
      * @param Request $request
      * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Request $request, User $user)
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::get();
+        return view('users.edit', compact('user', 'roles'));
         //страница редактирования пользователя
     }
 
@@ -92,6 +96,13 @@ class UserController extends Controller
             'email'    => Arr::get($frd, 'email'),
             'password' => Arr::get($frd, 'password'),
         ]);
+        $roleId = $frd['role'];
+//        /**
+//         * @var Role $role
+//         */
+//        $role = Role::find($roleId);
+        $user->attachRole($roleId);
+//        $user->detachRole('test');
         return redirect()->route('users.index');
         //обновление пользователя
     }

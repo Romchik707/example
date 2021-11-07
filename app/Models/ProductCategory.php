@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\ProductCategory
@@ -77,24 +79,45 @@ class ProductCategory extends Model
                     break;
             }
         }
-
         return $query;
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function parentCategory(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function parentCategory(): HasOne
     {
-        return $this->hasOne(ProductCategory::class, 'parent_category_id');
+        return $this->hasOne(ProductCategory::class, 'id', 'parent_category_id');
     }
 
     /**
      * @return ProductCategory
      */
-    public function getParentCategory(): ProductCategory
+    public function getParentCategory(): ?ProductCategory
     {
         return $this->parentCategory;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getParentCategoryName(): ?string
+    {
+        $parentCategoryName = null;
+        $parentCategory = $this->getParentCategory();
+        if ($parentCategory !== null) {
+            $parentCategoryName = $parentCategory->getName();
+        }
+        return $parentCategoryName;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCategoriesWithoutSelf(): Collection
+    {
+        $categories = ProductCategory::whereNotIn('id', [$this->getKey()])->get();
+        return $categories;
     }
 
     /**
@@ -113,25 +136,12 @@ class ProductCategory extends Model
         return $this->childCategories;
     }
 
+    /**
+     * @return array
+     */
     public static function getList(): array
     {
-        return self::pluck('name','id');
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFillable(): array
-    {
-        return $this->fillable;
-    }
-
-    /**
-     * @param string[] $fillable
-     */
-    public function setFillable(array $fillable): void
-    {
-        $this->fillable = $fillable;
+        return self::pluck('name', 'id')->toArray();
     }
 
     /**
@@ -155,9 +165,7 @@ class ProductCategory extends Model
      */
     public function getSlug(): string
     {
-        $sluggin = 'http://example.test/product-categories/' . $this->name;
-        $sluged = str_slug($sluggin);
-        return $sluged;
+        return $this->slug;
     }
 
     /**

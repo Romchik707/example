@@ -126,6 +126,22 @@ class User extends Authenticatable
         return $query;
     }
 
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+//     */
+//    public function role(): \Illuminate\Database\Eloquent\Relations\HasOne
+//    {
+//        return $this->hasOne(Role::class, 'id');
+//    }
+//
+//    /**
+//     * @return ProductCategory
+//     */
+//    public function getRole(): ProductCategory
+//    {
+//        return $this->role;
+//    }
+
     /**
      * @return string
      */

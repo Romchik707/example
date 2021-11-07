@@ -7,7 +7,12 @@
                 {{Form::model($user, ['url'=>route('users.update', $user), 'method'=>'PATCH'])}}
 
                 @include('users._form', $user)
-
+                @include('forms._select', [
+                    'label'=>'Роль',
+                    'name'=>'role',
+                    'elements'=>$roles,
+                    'value'=>'',
+                ])
                 <button class="btn btn-success">Сохранить</button>
                 {{Form::close()}}
             </div>

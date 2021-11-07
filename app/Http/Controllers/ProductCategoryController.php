@@ -39,19 +39,20 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
         ]);
         $frd = $request->all();
         //dd($frd);
         //$productCategory = ProductCategory::create($frd);
-        $productCategory = new ProductCategory($frd);
-        $productCategory->save([
+        $arrayCategory = [
             'name'               => $frd['name'],
-            'slug'               => Str::slug(Arr::get($frd, 'name')),
+            'slug'               => Str::slug($frd['name']),
             'parent_category_id' => Arr::get($frd, 'parent_category_id'),
-        ]);
+        ];
+        $productCategory = new ProductCategory($arrayCategory);
+//        dd($productCategory);
+        $productCategory->save();
         return redirect()->route('product-categories.index');
         //запись в базу данных при создании
     }
@@ -78,7 +79,8 @@ class ProductCategoryController extends Controller
      */
     public function edit(Request $request, ProductCategory $productCategory)
     {
-        $productCategories = ProductCategory::get();
+        //$parentCategory = ProductCategory::getParentCategory();
+        $productCategories = $productCategory->getCategoriesWithoutSelf();
         return view('product-categories.edit', compact('productCategory', 'productCategories'));
         //
     }

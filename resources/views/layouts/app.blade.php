@@ -26,25 +26,25 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url(route('home')) }}">
                     Дом
                 </a>
-                <a class="navbar-brand" href="{{ url('/users') }}">
+                <a class="navbar-brand" href="{{ url(route('users.index')) }}">
                     Пользователи
                 </a>
-                <a class="navbar-brand" href="{{ url('/discord') }}">
+                <a class="navbar-brand" href="{{ url(route('discord')) }}">
                     Дискорд
                 </a>
-                <a class="navbar-brand" href="{{ url('/products') }}">
+                <a class="navbar-brand" href="{{ url(route('products.index')) }}">
                     Продукты
                 </a>
-                <a class="navbar-brand" href="{{ url('/product-categories') }}">
+                <a class="navbar-brand" href="{{ url(route('product-categories.index')) }}">
                     Категории продуктов
                 </a>
-                <a class="navbar-brand" href="{{ url('/roles') }}">
+                <a class="navbar-brand" href="{{ url(route('roles.index')) }}">
                     Роли
                 </a>
-                <a class="navbar-brand" href="{{ url('/permissions') }}">
+                <a class="navbar-brand" href="{{ url(route('permissions.index')) }}">
                     Разрешения
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

@@ -22,7 +22,7 @@
                     </div>
                     {{Form::close()}}
                     <div class="col">
-                        <a href="{{route('roles.index')}}" class="btn btn-success">
+                        <a href="{{route('roles.create')}}" class="btn btn-success">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>

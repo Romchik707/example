@@ -7,6 +7,6 @@
 @include('forms._select', [
 	'label'=>'Родительская категория',
 	'name'=>'parent_category_id',
-    'value'=>isset($productCategory) ? $productCategory->getParentCategory()->getName() : '',
+    'value'=>isset($productCategory) ? $productCategory->getParentCategoryName() : '',
 	'elements'=>$productCategories,
 ])
