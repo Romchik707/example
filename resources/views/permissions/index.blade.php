@@ -39,12 +39,15 @@
                             <a href="{{route('permissions.edit', $permission)}}" class="btn btn-success">
                                 <i class="far fa-edit"></i>
                             </a>
-                            {{Form::open(['method'=>'DELETE', 'url'=>route('permissions.destroy', $permission)])}}
-
-                            <button class="btn btn-danger">
+                            <a href="{{route('permissions.destroy', $permission)}}" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>
-                            {{Form::close()}}
+                            </a>
+{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('permissions.destroy', $permission)])}}--}}
+
+{{--                            <button class="btn btn-danger">--}}
+{{--                                <i class="fas fa-trash-alt"></i>--}}
+{{--                            </button>--}}
+{{--                            {{Form::close()}}--}}
                             <a href="{{route('permissions.show', $permission)}}" class="btn btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>

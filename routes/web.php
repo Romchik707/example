@@ -42,7 +42,14 @@ Route::middleware(['role:admin', 'auth'])
         Route::resource('product-categories', App\Http\Controllers\ProductCategoryController::class);
         Route::resource('roles', App\Http\Controllers\RoleController::class);
         Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+        Route::resource('images', App\Http\Controllers\ImageController::class);
+        Route::post('/file-upload', [App\Http\Controllers\ImageController::class, 'store']);
     });
+
+Route::resource('images', App\Http\Controllers\ImageController::class);
+//Route::view('/file-upload', 'images.index')->name('images.index');
+Route::post('/file-upload', [App\Http\Controllers\ImageController::class, 'store']);
+//Route::get('/view-uploads', [App\Http\Controllers\ImageController::class, 'viewUploads']);
 
 //Route::resource('permissions', App\Http\Controllers\PermissionController::class);
 

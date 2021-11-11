@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="row">
-                    {{Form::open(['url'=>route('users.index'), 'method'=>'GET', 'class'=>'col'])}}
+                    {{Form::open(['url'=>route('images.index'), 'method'=>'GET', 'class'=>'col'])}}
                     <div class="row">
                         <div class="col">
                             @include('forms._input', [
@@ -22,33 +22,33 @@
                     </div>
                     {{Form::close()}}
                     <div class="col">
-                        <a href="{{route('users.create')}}" class="btn btn-success">
+                        <a href="{{route('images.create')}}" class="btn btn-success">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
-                @forelse($users as $user)
+                @forelse($images as $image)
                     <div class="row pb-2">
                         <div class="col-1">
-                            {{$user->getKey()}}
+                            {{$image->getKey()}}
                         </div>
                         <div class="col-6">
-                            {{$user->getName()}}
+                            <td class="cs-p-1"><a href="{{ $image->url }}">{{$image->getPicture()}}</a></td>
                         </div>
                         <div class="col-5">
-                            <a href="{{route('users.edit', $user)}}" class="btn btn-success">
+                            <a href="{{route('images.edit', $image)}}" class="btn btn-success">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a href="{{route('users.destroy', $user)}}" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('users.destroy', $user)])}}--}}
-
-{{--                            <button class="btn btn-danger">--}}
+{{--                            <a href="{{route('images.destroy', $image)}}" class="btn btn-danger">--}}
 {{--                                <i class="fas fa-trash-alt"></i>--}}
-{{--                            </button>--}}
-{{--                            {{Form::close()}}--}}
-                            <a href="{{route('users.show', $user)}}" class="btn btn-info">
+{{--                            </a>--}}
+                            {{Form::open(['method'=>'DELETE', 'url'=>route('images.destroy', $image)])}}
+
+                            <button class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            {{Form::close()}}
+                            <a href="{{route('images.show', $image)}}" class="btn btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </div>

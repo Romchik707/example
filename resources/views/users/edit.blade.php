@@ -13,6 +13,34 @@
                     'elements'=>$roles,
                     'value'=>'',
                 ])
+Имеющиеся роли
+                <div class="col-sm-9">
+
+                    <select multiple id="chroles"  name="chroles[]">
+                        @foreach($roles as $role)
+{{--                            @if ($user->hasRole($role->getName()) === true)--}}
+                                <option value={{$role->getKey()}}>{{$role->getName()}}</option>
+{{--                            @endif--}}
+{{--                        <option value="nl">Nederland</option>--}}
+{{--                        <option value="de">Duitsland</option>--}}
+{{--                        <option value="de1">Duitsland1</option>--}}
+{{--                        <option value="de2">Duitsland2</option>--}}
+                        @endforeach
+                    </select>
+                    <script>
+                        $('#chroles').selectize({
+                            maxItems: null,
+                            delimiter: ',',
+                            persist: true,
+                            create: function(input) {
+                                return {
+                                    value: input,
+                                    text: input
+                                }
+                            }
+                        });
+                    </script>
+                </div>
                 <button class="btn btn-success">Сохранить</button>
                 {{Form::close()}}
             </div>

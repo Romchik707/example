@@ -39,12 +39,15 @@
                             <a href="{{route('products.edit', $product)}}" class="btn btn-success">
                                 <i class="far fa-edit"></i>
                             </a>
-                            {{Form::open(['method'=>'DELETE', 'url'=>route('products.destroy', $product)])}}
-
-                            <button class="btn btn-danger">
+                            <a href="{{route('products.destroy', $product)}}" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>
-                            {{Form::close()}}
+                            </a>
+{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('products.destroy', $product)])}}--}}
+
+{{--                            <button class="btn btn-danger">--}}
+{{--                                <i class="fas fa-trash-alt"></i>--}}
+{{--                            </button>--}}
+{{--                            {{Form::close()}}--}}
                             <a href="{{route('products.show', $product)}}" class="btn btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>

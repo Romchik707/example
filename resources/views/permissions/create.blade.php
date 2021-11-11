@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Создание пользователя') }}</div>
+                    <div class="card-header">{{ __('Создание разрешения') }}</div>
 
                     <div class="card-body">
                         {{Form::open(['url'=>route('permissions.store'), 'method'=>'POST'])}}

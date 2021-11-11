@@ -90,18 +90,22 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $frd = $request->all();
-        //dd($frd);
+//        dd($frd);
         $user->update([
             'name'     => $frd['name'] ?? '',
             'email'    => Arr::get($frd, 'email'),
             'password' => Arr::get($frd, 'password'),
         ]);
-        $roleId = $frd['role'];
+        $roleId = $frd['chroles'];
+//        dd($roleId);
+        foreach ($frd['chroles'] as $item)
+//            dd($item);
+            $user->attachRole($item);
 //        /**
 //         * @var Role $role
 //         */
 //        $role = Role::find($roleId);
-        $user->attachRole($roleId);
+//        $user->attachRole($roleId);
 //        $user->detachRole('test');
         return redirect()->route('users.index');
         //обновление пользователя

@@ -1,3 +1,5 @@
+{{--@extends('images.master')--}}
+{{--@include('images.nav')--}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

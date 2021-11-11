@@ -39,12 +39,15 @@
                             <a href="{{route('roles.edit', $role)}}" class="btn btn-success">
                                 <i class="far fa-edit"></i>
                             </a>
-                            {{Form::open(['method'=>'DELETE', 'url'=>route('roles.destroy', $role)])}}
-
-                            <button class="btn btn-danger">
+                            <a href="{{route('roles.destroy', $role)}}" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>
-                            {{Form::close()}}
+                            </a>
+{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('roles.destroy', $role)])}}--}}
+
+{{--                            <button class="btn btn-danger">--}}
+{{--                                <i class="fas fa-trash-alt"></i>--}}
+{{--                            </button>--}}
+{{--                            {{Form::close()}}--}}
                             <a href="{{route('roles.show', $role)}}" class="btn btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>
