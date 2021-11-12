@@ -33,21 +33,21 @@
                             {{$image->getKey()}}
                         </div>
                         <div class="col-6">
-                            <td class="cs-p-1"><a href="{{ $image->url }}">{{$image->getPicture()}}</a></td>
+                            <a href="{{ $image->getPicture() }}">{{$image->getPicture()}}</a>
                         </div>
                         <div class="col-5">
                             <a href="{{route('images.edit', $image)}}" class="btn btn-success">
                                 <i class="far fa-edit"></i>
                             </a>
-{{--                            <a href="{{route('images.destroy', $image)}}" class="btn btn-danger">--}}
-{{--                                <i class="fas fa-trash-alt"></i>--}}
-{{--                            </a>--}}
-                            {{Form::open(['method'=>'DELETE', 'url'=>route('images.destroy', $image)])}}
-
-                            <button class="btn btn-danger">
+                            <a href="{{route('images.destroy', $image)}}" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>
-                            {{Form::close()}}
+                            </a>
+{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('images.destroy', $image)])}}--}}
+
+{{--                            <button class="btn btn-danger">--}}
+{{--                                <i class="fas fa-trash-alt"></i>--}}
+{{--                            </button>--}}
+{{--                            {{Form::close()}}--}}
                             <a href="{{route('images.show', $image)}}" class="btn btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>

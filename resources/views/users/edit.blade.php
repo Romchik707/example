@@ -7,43 +7,42 @@
                 {{Form::model($user, ['url'=>route('users.update', $user), 'method'=>'PATCH'])}}
 
                 @include('users._form', $user)
-                @include('forms._select', [
-                    'label'=>'Роль',
-                    'name'=>'role',
-                    'elements'=>$roles,
-                    'value'=>'',
-                ])
-Имеющиеся роли
-                <div class="col-sm-9">
+{{--                @include('forms._select', [--}}
+{{--                    'label'=>'Роль',--}}
+{{--                    'name'=>'role',--}}
+{{--                    'elements'=>$roles,--}}
+{{--                    'value'=>'',--}}
+{{--                ])--}}
+                Имеющиеся роли
+                @include('forms._multiselect', [
+    'label'=>'Ad',
+    'name'=>'list[]',
+    'elements'=>$roles,
+    'value'=>$choosedRoles,
+])
+{{--                <div class="col-sm-9">--}}
 
-                    <select multiple id="chroles"  name="chroles[]">
-                        @foreach($roles as $role)
-{{--                            @if ($user->hasRole($role->getName()) === true)--}}
-                                <option value={{$role->getKey()}}>{{$role->getName()}}</option>
-{{--                            @endif--}}
-{{--                        <option value="nl">Nederland</option>--}}
-{{--                        <option value="de">Duitsland</option>--}}
-{{--                        <option value="de1">Duitsland1</option>--}}
-{{--                        <option value="de2">Duitsland2</option>--}}
-                        @endforeach
-                    </select>
-                    <script>
-                        $('#chroles').selectize({
-                            maxItems: null,
-                            delimiter: ',',
-                            persist: true,
-                            create: function(input) {
-                                return {
-                                    value: input,
-                                    text: input
-                                }
-                            }
-                        });
-                    </script>
-                </div>
+{{--                    <select multiple class="selectize" id="chroles" name="chroles[]">--}}
+{{--                        @foreach($roles as $role)--}}
+{{--                            --}}{{--                            @if ($user->hasRole($role->getName()) === true)--}}
+{{--                            <option class="selectize-dropdown-content" value={{$role->getKey()}}>{{$role->getName()}}</option>--}}
+{{--                            --}}{{--                            @endif--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
                 <button class="btn btn-success">Сохранить</button>
                 {{Form::close()}}
             </div>
         </div>
     </div>
+{{--    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>--}}
+{{--    <script>--}}
+{{--        // document.getElementById('btn-alert').onclick = function (){--}}
+{{--        //     document.getElementById('btn-alert').style.width = Math.floor(Math.random() * 898) + 'px';--}}
+{{--        // };--}}
+{{--        $('#btn-alert').onclick = function (){--}}
+{{--            alert('adwdasd');--}}
+{{--        };--}}
+{{--        $('#chroles').selectize();--}}
+{{--    </script>--}}
 @endsection

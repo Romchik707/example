@@ -77,8 +77,16 @@ class UserController extends Controller
      */
     public function edit(Request $request, User $user)
     {
+        $array[] = '';
         $roles = Role::get();
-        return view('users.edit', compact('user', 'roles'));
+        foreach ($roles as $role) {
+            if ($user->hasRole($role->getName()) === false) {
+                array_push($array, (string)$role->getKey());
+            }
+        }
+//        dd($array);
+        $choosedRoles = Role::whereNotIn('id', $array)->get();
+        return view('users.edit', compact('user', 'roles', 'choosedRoles'));
         //страница редактирования пользователя
     }
 
@@ -96,11 +104,11 @@ class UserController extends Controller
             'email'    => Arr::get($frd, 'email'),
             'password' => Arr::get($frd, 'password'),
         ]);
-        $roleId = $frd['chroles'];
-//        dd($roleId);
-        foreach ($frd['chroles'] as $item)
+//        $roleIds = $frd['chroles'];
+//        dd($roleIds);
+//        foreach ($frd['list'] as $item)
 //            dd($item);
-            $user->attachRole($item);
+            $user->attachRole($frd['list']);
 //        /**
 //         * @var Role $role
 //         */
