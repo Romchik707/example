@@ -58,13 +58,13 @@ class ImageController extends Controller
             if ($request->file('image')->isValid()) {
                 //
                 $validated = $request->validate([
-                    'name' => 'string|max:40',
+                    'new_image_name' => 'string|max:40',
                     'image' => 'mimes:jpeg,png|max:1014',
                 ]);
 //                dd('1');
                 $extension = $request->image->extension();
-                $request->image->storeAs('/public', $validated['name'].".".$extension);
-                $url = Storage::url($validated['name'].".".$extension);
+                $request->image->storeAs('/public', $validated['new_image_name'].".".$extension);
+                $url = Storage::url($validated['new_image_name'].".".$extension);
                 //dd($url);
                 $file = Image::create([
                     'picture' => $url,

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class ProductController extends Controller
@@ -39,6 +42,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name'        => 'required',
             'description' => 'required',
@@ -46,11 +50,59 @@ class ProductController extends Controller
             'category_id' => 'required',
         ]);
         $frd = $request->all();
-        //dd($frd);
+//        dd($frd);
+//        if ($request->hasFile('image')) {
+            //  Let's do everything here
+        if ($request->hasFile('image')) {
+            //  Let's do everything here
+            $za = 1;
+            if ($request->file('image')->isValid()) {
+                //
+                $validated = $request->validate([
+                    'new_image_name' => 'string|max:40',
+                    'image' => 'mimes:jpeg,png|max:1014',
+                ]);
+//                dd('1');
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public', $validated['new_image_name'].".".$extension);
+                $url = Storage::url($validated['new_image_name'].".".$extension);
+                //dd($url);
+                $file = Image::create([
+                    'picture' => $url,
+                ]);
+//                dd($url);
+                Session::flash('success', "Success!");
+                $arrayProduct = [
+                    'name'        => $frd['name'] ?? '',
+                    'description' => Arr::get($frd, 'description'),
+                    'price'       => Arr::get($frd, 'price'),
+                    'category_id' => Arr::get($frd, 'category_id'),
+                    'image_id'    => (string)$file->getKey(),
+                ];
+                $product = new Product($arrayProduct);
+                $product->save();
+            }
+        }
+        else {
+            $arrayProduct = [
+                'name'        => $frd['name'] ?? '',
+                'description' => Arr::get($frd, 'description'),
+                'price'       => Arr::get($frd, 'price'),
+                'category_id' => Arr::get($frd, 'category_id'),
+                'image_id'    => null,
+            ];
+            $product = new Product($arrayProduct);
+            $product->save();
+        }
+
+        return redirect()->route('images.index');
+//        dd($za);
+//        abort(500, 'Could not upload image :(');
+        //
         //$productCategory = ProductCategory::create($frd);
-        $product = new Product($frd);
-        $product->save();
-        return redirect()->route('products.index');
+        //        $frd = $request->all();
+//        dd($frd);
+//        return redirect()->route('products.index');
         //запись в базу данных при создании
         //
     }
@@ -60,9 +112,16 @@ class ProductController extends Controller
      * @param Product $product
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Request $request, Product $product)
+    public function show(Request $request, Product $product, Image $image)
     {
-        return view('products.show', compact('product'));
+        $imagePicture = '';
+        $image = Image::whereIn('id', [$product->getImageId()])->get();
+//        dd($image->first());
+        if ($image->first() !== null)
+        {
+            $imagePicture = $image->first()->getPicture();
+        }
+        return view('products.show', compact('product', 'imagePicture'));
         //
     }
 

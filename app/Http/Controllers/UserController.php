@@ -86,6 +86,7 @@ class UserController extends Controller
         }
 //        dd($array);
         $choosedRoles = Role::whereNotIn('id', $array)->get();
+//        dd($choosedRoles);
         return view('users.edit', compact('user', 'roles', 'choosedRoles'));
         //страница редактирования пользователя
     }

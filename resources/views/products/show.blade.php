@@ -34,9 +34,9 @@
                     <div class="col">
                         {{$product->getCategoryId()}}
                     </div>
-                    <div class="col">
-                        {{$product->getImageId()}}
-                    </div>
+                    <a class="col" href="{{$imagePicture??''}}">
+                        {{$imagePicture??''}}
+                    </a>
                 </div>
                 <a href="{{route('products.index')}}}"></a>
             </div>

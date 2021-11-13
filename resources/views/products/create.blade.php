@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Создание продукта') }}</div>
 
                     <div class="card-body">
-                        {{Form::open(['url'=>route('products.store'), 'method'=>'POST'])}}
+                        {{Form::open(['url'=>route('products.store'), 'method'=>'POST', 'files'=>true])}}
 
                         @include('products._form')
 
