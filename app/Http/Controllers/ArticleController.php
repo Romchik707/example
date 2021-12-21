@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Models\TraitImage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -40,27 +43,112 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $authUser = auth()->user()->getAuthIdentifier();
+////        dd($authUser);
+//        $request->validate([
+//            'name'      => 'required',
+//            'posted_at' => 'required',
+//        ]);
+//        $frd = $request->all();
+////        dd($frd);
+//        //$user = User::create($frd);
+//        $arrayArticle = [
+//            'name'                          => $frd['name'],
+//            'slug'                          => Str::slug($frd['name']),
+//            'is_super'                      => Arr::has($frd, 'is_super'),
+//            'description'                   => $frd['name'],
+//            'posted_at'                     => $frd['posted_at'],
+//            'article-trixFields'            => request('article-trixFields'),
+//            'attachment-article-trixFields' => request('attachment-article-trixFields'),
+//        ];
+//        $article = new Article($arrayArticle);
+//        $article->save();
+////        return redirect()->route('articles.index');
+//        //запись в базу данных при создании
+//        //
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         $request->validate([
             'name'      => 'required',
             'posted_at' => 'required',
         ]);
         $frd = $request->all();
 //        dd($frd);
-        //$user = User::create($frd);
-        $arrayArticle = [
-            'name'                          => $frd['name'],
-            'slug'                          => Str::slug($frd['name']),
-            'is_super'                      => Arr::has($frd, 'is_super'),
-            'description'                   => $frd['name'],
-            'posted_at'                     => $frd['posted_at'],
-            'article-trixFields'            => request('article-trixFields'),
-            'attachment-article-trixFields' => request('attachment-article-trixFields'),
-        ];
-        $article = new Article($arrayArticle);
-        $article->save();
+        $fileBefore = TraitImage::create([
+            'alt' => 'Картинки нет',
+            'url' => '1',
+            'size' => '1',
+            'imageable_id' => '0',
+            'imageable_type' => 'article',
+            'user_id' => $authUser,
+        ]);
+//        dd($fileBefore);
+//        dd(array_first(Arr::get($frd, 'product-trixFields')));
+//        if ($request->hasFile('image')) {
+        //  Let's do everything here
+        if ($request->hasFile('image')) {
+            //  Let's do everything here
+            $za = 1;
+            if ($request->file('image')->isValid()) {
+                //
+                $validated = $request->validate([
+                    'new_image_name' => 'string|max:40',
+                    'image'          => 'mimes:jpeg,png|max:1014',
+                ]);
+//                dd('1');
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public', (string)$fileBefore->getKey().'-'.$validated['new_image_name'] . "." . $extension);
+                $url = Storage::url((string)$fileBefore->getKey().'-'.$validated['new_image_name'] . "." . $extension);
+//                dd($url);
+//                Image::where('id', (string)$fileBefore->getKey())->update(['picture'=>$url]);
+                TraitImage::where('id', (string)$fileBefore->getKey())
+                    ->update(['title' => (string)$validated['new_image_name'], 'url' => $url,
+                              'description' => (string)$url, 'size' => (integer)$frd['image']->getSize()]);
+//                $file = $fileBefore::update([
+//                    'picture' => $url,
+//                ]);
+//                dd($url);
+                Session::flash('success', "Success!");
+//                dd(request()->all());
+//                Product::create(request()->all());
+//                dd();
+                $newArticle = Article::create([
+                    'name'                          => $frd['name'],
+                    'slug'                          => Str::slug($frd['name']),
+                    'is_super'                      => Arr::has($frd, 'is_super'),
+                    'description'                   => $frd['name'],
+                    'posted_at'                     => $frd['posted_at'],
+                    'article-trixFields'            => request('article-trixFields'),
+                    'attachment-article-trixFields' => request('attachment-article-trixFields'),
+                ]);
+//                dd($newArticle);
+                TraitImage::where('id', (string)$fileBefore->getKey())
+                    ->update(['imageable_id' => $newArticle->getKey(),]);
+//                $arrayProduct = [
+//                    'name'        => $frd['name'] ?? '',
+//                    'product-trixFields' => request('product-trixFields'),
+//                    'description' => Arr::get($frd, 'name'),
+//                    'price'       => Arr::get($frd, 'price'),
+//                    'category_id' => Arr::get($frd, 'category_id'),
+//                    'image_id'    => (string)$file->getKey(),
+//                ];
+//                $product = new Product($arrayProduct);
+//                $product->save();
+            }
+        } else {
+//            dd(request()->all());
+            Article::create([
+                'name'                          => $frd['name'],
+                'slug'                          => Str::slug($frd['name']),
+                'is_super'                      => Arr::has($frd, 'is_super'),
+                'description'                   => $frd['name'],
+                'posted_at'                     => $frd['posted_at'],
+                'article-trixFields'            => request('article-trixFields'),
+                'attachment-article-trixFields' => request('attachment-article-trixFields'),
+            ]);
+//            $product = new Product($arrayProduct);
+//            $product->save();
+        }
         return redirect()->route('articles.index');
-        //запись в базу данных при создании
-        //
     }
 
     /**
@@ -69,7 +157,12 @@ class ArticleController extends Controller
      */
     public function show(Request $request, Article $article)
     {
-        return view('articles.show', compact('article'));
+        $images = TraitImage::get();
+        $image = TraitImage::whereIn('imageable_id', [$article->getKey()])->get();
+        if ($image->first() !== null) {
+            $imageUrl = $image->first()->getUrl();
+        }
+        return view('articles.show', compact('article', 'imageUrl'));
         //
     }
 

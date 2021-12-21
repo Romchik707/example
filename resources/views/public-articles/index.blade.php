@@ -35,7 +35,7 @@
                             <img
                                 style="max-height: 250px; width: 100%;"
                                 class="card-img-top"
-                                src="https://st.depositphotos.com/1032577/3572/i/950/depositphotos_35727883-stock-photo-black-background.jpg"
+                                src="{{$publicArticle->getImage()}}"
                                 alt="Тут могла бы быть ваша реклама...">
                             <div class="card-body">
                                 <h5 class="card-title">{{$publicArticle->getName()}}</h5>

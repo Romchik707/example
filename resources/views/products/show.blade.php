@@ -32,7 +32,7 @@
                         {{$product->getPrice()}}
                     </div>
                     <div class="col">
-                        {{$product->getCategoryId()}}
+                        {{$product->getCategoryName()}}
                     </div>
                     <div class="col">
                         <img src="{{$product->getImagePicture()}}" width="100" height="100" alt="lorem">

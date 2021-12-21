@@ -9,7 +9,7 @@
                 @include('products._form', $product)
                 <div class="form-group">
                     Описание
-                    {!!$article->trix('content')!!}
+                    {!!$product->trix('content')!!}
                 </div>
                 <button class="btn btn-success">Сохранить</button>
                 {{Form::close()}}

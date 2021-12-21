@@ -14,16 +14,62 @@
                     <div class="col">
                         Название
                     </div>
+                    <div class="col">
+                        URL
+                    </div>
+                    <div class="col">
+                        Описание
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        {{$image->getKey()}}
+                        {{$traitImage->getKey()}}
                     </div>
                     <div class="col">
-                        <a href="{{ $image->picture }}">{{$image->getPicture()}}</a>
+                        {{$traitImage->getAlt()}}
                     </div>
                     <div class="col">
-                        {{$image->getCreatedAt()}}
+                        {{$traitImage->getTitle()}}
+                    </div>
+                    <div class="col">
+                        <a href="{{ $traitImage->getUrl() }}">{{$traitImage->getUrl()}}</a>
+                    </div>
+                    <div class="col">
+                        {{$traitImage->getDescription()}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Размер
+                    </div>
+                    <div class="col">
+                        ID объекта
+                    </div>
+                    <div class="col">
+                        Тип объекта
+                    </div>
+                    <div class="col">
+                        ID пользователя
+                    </div>
+                    <div class="col">
+                        Дата создания
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{$traitImage->getSize()}}
+                    </div>
+                    <div class="col">
+                        {{$traitImage->getImageableId()}}
+                    </div>
+                    <div class="col">
+                        {{$traitImage->getImageableType()}}
+                    </div>
+                    <div class="col">
+                        {{$traitImage->getUserId()}}
+                    </div>
+                    <div class="col">
+                        {{$traitImage->getCreatedAt()}}
                     </div>
                 </div>
                 <a href="{{route('images.index')}}}"></a>

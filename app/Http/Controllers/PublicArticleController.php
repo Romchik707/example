@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\TraitImage;
 
 class PublicArticleController extends Controller
 {
@@ -52,8 +53,13 @@ class PublicArticleController extends Controller
      */
     public function show(Request $request, Article $publicArticle)
     {
-//        dd($publicArticle);
-        return view('public-articles.show', compact('publicArticle'));
+        $images = TraitImage::get();
+        $image = TraitImage::whereIn('imageable_id', [$publicArticle->getKey()])->get();
+        if ($image->first() !== null) {
+            $imageUrl = $image->first()->getUrl();
+        }
+//        dd($imageUrl);
+        return view('public-articles.show', compact('publicArticle', 'imageUrl'));
         //
     }
 

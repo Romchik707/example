@@ -17,6 +17,9 @@
                     <div class="col">
                         Дата выпуска
                     </div>
+                    <div class="col">
+                        Картинка
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -30,6 +33,9 @@
                     </div>
                     <div class="col">
                         {{$article->getPostedAt()}}
+                    </div>
+                    <div class="col">
+                        <img src="{{$imageUrl}}" width="100" height="100" alt="lorem">
                     </div>
 {{--                    <a class="col" href="{{$imagePicture??''}}">--}}
 {{--                        {{$imagePicture??''}}--}}

@@ -33,7 +33,7 @@
                             {{$traitImage->getKey()}}
                         </div>
                         <div class="col-6">
-                            <a href="{{ $traitImage->getTitle() }}">{{$traitImage->getTitle()}}</a>
+                            {{ $traitImage->getTitle() }}
                         </div>
                         <div class="col-2 btn-group" role="group" aria-label="Basic example">
 {{--                            <a href="{{route('trait-images.edit', $traitImage)}}" class="btn btn-success btn-secondary">--}}

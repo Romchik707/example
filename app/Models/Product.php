@@ -99,15 +99,26 @@ class Product extends Model
      */
     public function category(): HasOne
     {
-        return $this->hasOne(ProductCategory::class, 'id');
+        return $this->hasOne(ProductCategory::class, 'id', 'category_id');
     }
 
     /**
      * @return ProductCategory
      */
-    public function getCategory(): ProductCategory
+    public function getCategory(): ?ProductCategory
     {
         return $this->category;
+    }
+
+    public function getCategoryName(): string
+    {
+        $categoryName = '';
+        $category = $this->getCategory();
+//        dd($category);
+        if ($category !== null) {
+            $categoryName = $category->getName();
+        }
+        return $categoryName;
     }
 
     /**
@@ -135,7 +146,7 @@ class Product extends Model
         $image = $this->getImage();
 //        dd($image);
         if ($image !== null) {
-            $imagePicture = $image->getPicture();
+            $imagePicture = $image->getUrl();
         }
         return $imagePicture;
     }

@@ -50,8 +50,9 @@ class TraitImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, TraitImage $traitImage)
     {
+        return view('trait-images.show', compact('traitImage'));
         //
     }
 

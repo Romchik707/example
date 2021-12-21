@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Boolean;
 use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
+use App\Models\TraitImage;
 
 /**
  * App\Models\Article
@@ -92,6 +93,18 @@ class Article extends Model
         }
 
         return $query;
+    }
+
+    public function getImage(): ?string
+    {
+        $images = TraitImage::get();
+        $image = TraitImage::whereIn(
+            'imageable_id', [$this->getKey()]
+        )->get();
+        if ($image->first() !== null) {
+            $imageUrl = $image->first()->getUrl();
+        }
+        return $imageUrl;
     }
 
     public function isSuper(): bool

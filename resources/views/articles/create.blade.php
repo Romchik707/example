@@ -16,6 +16,13 @@
                             Описание
                             @trix(\App\Article::class, 'content')
                         </div>
+                        @include('forms._file', [
+    'label'=>'Название картинки',
+    'name'=>'new_image_name',
+    'image'=>'image',
+    'placeholder'=>'Ага...',
+    ])
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
