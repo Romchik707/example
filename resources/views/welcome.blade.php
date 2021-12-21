@@ -26,9 +26,11 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                    <a href="{{ route('public-articles.index') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Articles</a>
+                    <a href="{{ route('public-products.index') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Products</a>
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                        <a href="{{ url('/discord') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Discord</a>
+                        <a href="{{ route('home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        <a href="{{ route('discord') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Discord</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="row">
-                    {{Form::open(['url'=>route('permissions.index'), 'method'=>'GET', 'class'=>'col'])}}
+                    {{Form::open(['url'=>route('articles.index'), 'method'=>'GET', 'class'=>'col'])}}
                     <div class="row">
                         <div class="col">
                             @include('forms._input', [
@@ -22,33 +22,33 @@
                     </div>
                     {{Form::close()}}
                     <div class="col">
-                        <a href="{{route('permissions.create')}}" class="btn btn-success">
+                        <a href="{{route('articles.create')}}" class="btn btn-success">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
-                @forelse($permissions as $permission)
+                @forelse($articles as $article)
                     <div class="row pb-2">
                         <div class="col-1">
-                            {{$permission->getKey()}}
+                            {{$article->getKey()}}
                         </div>
                         <div class="col-6">
-                            {{$permission->getName()}}
+                            {{$article->getName()}}
                         </div>
                         <div class="col-2 btn-group" role="group" aria-label="Basic example">
-                            <a href="{{route('permissions.edit', $permission)}}" class="btn btn-success btn-secondary">
+                            <a href="{{route('articles.edit', $article)}}" class="btn btn-success btn-secondary">
                                 <i class="far fa-edit"></i>
                             </a>
-{{--                            <a href="{{route('permissions.destroy', $permission)}}" class="btn btn-danger">--}}
+{{--                            <a href="{{route('products.destroy', $product)}}" class="btn btn-danger">--}}
 {{--                                <i class="fas fa-trash-alt"></i>--}}
 {{--                            </a>--}}
-                            {{Form::open(['method'=>'DELETE', 'url'=>route('permissions.destroy', $permission)])}}
+                            {{Form::open(['method'=>'DELETE', 'url'=>route('articles.destroy', $article)])}}
 
                             <button class="btn btn-danger btn-secondary">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                             {{Form::close()}}
-                            <a href="{{route('permissions.show', $permission)}}" class="btn btn-info btn-secondary">
+                            <a href="{{route('articles.show', $article)}}" class="btn btn-info btn-secondary">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </div>

@@ -26,6 +26,7 @@ use Laratrust\Models\LaratrustRole;
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static Builder|Role filter(array $frd)
  */
 class Role extends LaratrustRole
 {

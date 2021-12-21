@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('public-articles', App\Http\Controllers\PublicArticleController::class);
+
+Route::resource('public-products', App\Http\Controllers\PublicProductController::class);
+
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //
 //Route::get('/discord', [App\Http\Controllers\DiscordController::class, 'index'])->name('discord');
@@ -33,7 +37,7 @@ Auth::routes();
 
 Route::middleware(['role:admin', 'auth'])
 //    ->name('admin.')
-    ->prefix('admin')
+    ->prefix('crm')
     ->group(static function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::get('/discord', [App\Http\Controllers\DiscordController::class, 'index'])->name('discord');
@@ -43,10 +47,12 @@ Route::middleware(['role:admin', 'auth'])
         Route::resource('roles', App\Http\Controllers\RoleController::class);
         Route::resource('permissions', App\Http\Controllers\PermissionController::class);
         Route::resource('images', App\Http\Controllers\ImageController::class);
+        Route::resource('articles', App\Http\Controllers\ArticleController::class);
+        Route::resource('images', App\Http\Controllers\ImageController::class);
+        Route::resource('trait-images', App\Http\Controllers\TraitImageController::class);
 //        Route::post('/file-upload', [App\Http\Controllers\ImageController::class, 'store'])->name('');
     });
 
-Route::resource('images', App\Http\Controllers\ImageController::class);
 //Route::view('/file-upload', 'images.index')->name('images.index');
 //Route::post('/file-upload', [App\Http\Controllers\ImageController::class, 'store']);
 //Route::get('/view-uploads', [App\Http\Controllers\ImageController::class, 'viewUploads']);

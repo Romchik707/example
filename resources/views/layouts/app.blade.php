@@ -19,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" >
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    @trixassets
 </head>
 <body>
     <div id="app">
@@ -27,7 +28,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <a class="navbar-brand" href="{{ url(route('home')) }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     Дом
                 </a>
                 <a class="navbar-brand" href="{{ url(route('users.index')) }}">
@@ -50,6 +51,12 @@
                 </a>
                 <a class="navbar-brand" href="{{ url(route('images.index')) }}">
                     Картинки
+                </a>
+                <a class="navbar-brand" href="{{ url(route('articles.index')) }}">
+                    Статьи
+                </a>
+                <a class="navbar-brand" href="{{ url(route('trait-images.index')) }}">
+                    Пикчи
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

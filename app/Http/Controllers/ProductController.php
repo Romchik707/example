@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\TraitImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -42,17 +43,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        $authUser = auth()->user()->getAuthIdentifier();
         $request->validate([
             'name'        => 'required',
-            'description' => 'required',
             'price'       => 'required',
             'category_id' => 'required',
         ]);
         $frd = $request->all();
 //        dd($frd);
+        $fileBefore = TraitImage::create([
+            'alt' => 'Кртинки нет',
+            'url' => '1',
+            'size' => '1',
+            'imageable_id' => '0',
+            'imageable_type' => 'product',
+            'user_id' => $authUser,
+        ]);
+//        dd($fileBefore);
+//        dd(array_first(Arr::get($frd, 'product-trixFields')));
 //        if ($request->hasFile('image')) {
-            //  Let's do everything here
+        //  Let's do everything here
         if ($request->hasFile('image')) {
             //  Let's do everything here
             $za = 1;
@@ -60,42 +70,63 @@ class ProductController extends Controller
                 //
                 $validated = $request->validate([
                     'new_image_name' => 'string|max:40',
-                    'image' => 'mimes:jpeg,png|max:1014',
+                    'image'          => 'mimes:jpeg,png|max:1014',
                 ]);
 //                dd('1');
                 $extension = $request->image->extension();
-                $request->image->storeAs('/public', $validated['new_image_name'].".".$extension);
-                $url = Storage::url($validated['new_image_name'].".".$extension);
-                //dd($url);
-                $file = Image::create([
-                    'picture' => $url,
-                ]);
+                $request->image->storeAs('/public', (string)$fileBefore->getKey().'-'.$validated['new_image_name'] . "." . $extension);
+                $url = Storage::url((string)$fileBefore->getKey().'-'.$validated['new_image_name'] . "." . $extension);
+//                dd($url);
+//                Image::where('id', (string)$fileBefore->getKey())->update(['picture'=>$url]);
+                TraitImage::where('id', (string)$fileBefore->getKey())
+                    ->update(['title' => (string)$validated['new_image_name'], 'url' => $url,
+                              'description' => (string)$url, 'size' => (integer)$frd['image']->getSize()]);
+//                $file = $fileBefore::update([
+//                    'picture' => $url,
+//                ]);
 //                dd($url);
                 Session::flash('success', "Success!");
-                $arrayProduct = [
-                    'name'        => $frd['name'] ?? '',
-                    'description' => Arr::get($frd, 'description'),
-                    'price'       => Arr::get($frd, 'price'),
-                    'category_id' => Arr::get($frd, 'category_id'),
-                    'image_id'    => (string)$file->getKey(),
-                ];
-                $product = new Product($arrayProduct);
-                $product->save();
+//                dd(request()->all());
+//                Product::create(request()->all());
+//                dd();
+                $newProduct = Product::create([
+                    'name'               => $frd['name'] ?? '',
+                    'product-trixFields' => request('product-trixFields'),
+                    'attachment-product-trixFields' => request('attachment-product-trixFields'),
+                    'description'        => Arr::get($frd, 'name'),
+                    'price'              => Arr::get($frd, 'price'),
+                    'category_id'        => Arr::get($frd, 'category_id'),
+                    'image_id'           => (string)$fileBefore->getKey(),
+                ]);
+//                dd();
+                TraitImage::where('id', (string)$fileBefore->getKey())
+                    ->update(['imageable_id' => $newProduct->getKey(),]);
+//                $arrayProduct = [
+//                    'name'        => $frd['name'] ?? '',
+//                    'product-trixFields' => request('product-trixFields'),
+//                    'description' => Arr::get($frd, 'name'),
+//                    'price'       => Arr::get($frd, 'price'),
+//                    'category_id' => Arr::get($frd, 'category_id'),
+//                    'image_id'    => (string)$file->getKey(),
+//                ];
+//                $product = new Product($arrayProduct);
+//                $product->save();
             }
+        } else {
+//            dd(request()->all());
+            Product::create([
+                'name'               => $frd['name'] ?? '',
+                'product-trixFields' => request('product-trixFields'),
+                'attachment-product-trixFields' => request('attachment-product-trixFields'),
+                'description'        => Arr::get($frd, 'name'),
+                'price'              => Arr::get($frd, 'price'),
+                'category_id'        => Arr::get($frd, 'category_id'),
+                'image_id'           => null,
+            ]);
+//            $product = new Product($arrayProduct);
+//            $product->save();
         }
-        else {
-            $arrayProduct = [
-                'name'        => $frd['name'] ?? '',
-                'description' => Arr::get($frd, 'description'),
-                'price'       => Arr::get($frd, 'price'),
-                'category_id' => Arr::get($frd, 'category_id'),
-                'image_id'    => null,
-            ];
-            $product = new Product($arrayProduct);
-            $product->save();
-        }
-
-        return redirect()->route('images.index');
+        return redirect()->route('products.index');
 //        dd($za);
 //        abort(500, 'Could not upload image :(');
         //
@@ -112,16 +143,10 @@ class ProductController extends Controller
      * @param Product $product
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Request $request, Product $product, Image $image)
+    public function show(Request $request, Product $product)
     {
-        $imagePicture = '';
-        $image = Image::whereIn('id', [$product->getImageId()])->get();
-//        dd($image->first());
-        if ($image->first() !== null)
-        {
-            $imagePicture = $image->first()->getPicture();
-        }
-        return view('products.show', compact('product', 'imagePicture'));
+//        dd($product->getImagePicture());
+        return view('products.show', compact('product'));
         //
     }
 
@@ -132,9 +157,14 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
+        $productCategoryName = '';
         $productCategories = ProductCategory::get();
-
-        return view('products.edit', compact('product', 'productCategories'));
+        $productCategory = ProductCategory::whereIn('id', [$product->getCategoryId()])->get();
+//        dd($productCategory->first()->getName());
+        if ($productCategory->first() !== null) {
+            $productCategoryName = $productCategory->first()->getName();
+        }
+        return view('products.edit', compact('product', 'productCategories', 'productCategoryName'));
         //
     }
 
@@ -169,6 +199,7 @@ class ProductController extends Controller
         $frd = $request->all();
         //dd($frd);
         $product->delete();
+        $product->trixRichText->each->delete();
         return redirect()->back();
         //
     }

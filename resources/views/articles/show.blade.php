@@ -12,41 +12,35 @@
                         Имя
                     </div>
                     <div class="col">
-                        Цена
+                        Супер
                     </div>
                     <div class="col">
-                        Категория
-                    </div>
-                    <div class="col">
-                        Фото
+                        Дата выпуска
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        {{$product->getKey()}}
+                        {{$article->getKey()}}
                     </div>
                     <div class="col">
-                        {{$product->getName()}}
+                        {{$article->getName()}}
                     </div>
                     <div class="col">
-                        {{$product->getPrice()}}
+                        {{$article->getIsSuper()}}
                     </div>
                     <div class="col">
-                        {{$product->getCategoryId()}}
-                    </div>
-                    <div class="col">
-                        <img src="{{$product->getImagePicture()}}" width="100" height="100" alt="lorem">
+                        {{$article->getPostedAt()}}
                     </div>
 {{--                    <a class="col" href="{{$imagePicture??''}}">--}}
 {{--                        {{$imagePicture??''}}--}}
 {{--                    </a>--}}
                     <div class="col-12">
-                        {!!$product->trix('content')!!}
+                        Описание
+                        {!!$article->trix('content')!!}
 {{--                        @trix(\App\Product::class, 'content')--}}
 
                     </div>
                 </div>
-                <a href="{{route('products.index')}}}"></a>
             </div>
         </div>
     </div>

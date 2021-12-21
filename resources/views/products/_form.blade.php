@@ -4,11 +4,11 @@
 	'value'=>isset($product) ? $product->getName() : '',
 ])
 
-@include('forms._input', [
-	'label'=>'Описание',
-	'name'=>'description',
-	'value'=>isset($product) ? $product->getDescription() : '',
-])
+{{--@include('forms._input', [--}}
+{{--	'label'=>'Описание',--}}
+{{--	'name'=>'description',--}}
+{{--	'value'=>isset($product) ? $product->getDescription() : '',--}}
+{{--])--}}
 
 @include('forms._input', [
 	'label'=>'Цена',
@@ -20,6 +20,7 @@
 	'label'=>'Категория',
 	'name'=>'category_id',
 	'elements'=>$productCategories,
+	'value'=>$productCategoryName??'',
 ])
 
 {{--@include('forms._input', [--}}
@@ -27,10 +28,3 @@
 {{--	'name'=>'image_id',--}}
 {{--	'value'=>isset($product) ? $product->getImageId() : '',--}}
 {{--])--}}
-
-@include('forms._file', [
-    'label'=>'Название картинки',
-    'name'=>'new_image_name',
-    'image'=>'image',
-    'placeholder'=>'Ага...',
-    ])

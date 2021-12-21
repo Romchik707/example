@@ -26,6 +26,7 @@ use Laratrust\Models\LaratrustPermission;
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static Builder|Permission filter(array $frd)
  */
 class Permission extends LaratrustPermission
 {

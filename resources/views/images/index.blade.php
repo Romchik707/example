@@ -35,20 +35,20 @@
                         <div class="col-6">
                             <a href="{{ $image->getPicture() }}">{{$image->getPicture()}}</a>
                         </div>
-                        <div class="col-5">
-                            <a href="{{route('images.edit', $image)}}" class="btn btn-success">
+                        <div class="col-2 btn-group" role="group" aria-label="Basic example">
+                            <a href="{{route('images.edit', $image)}}" class="btn btn-success btn-secondary">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a href="{{route('images.destroy', $image)}}" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('images.destroy', $image)])}}--}}
-
-{{--                            <button class="btn btn-danger">--}}
+{{--                            <a href="{{route('images.destroy', $image)}}" class="btn btn-danger">--}}
 {{--                                <i class="fas fa-trash-alt"></i>--}}
-{{--                            </button>--}}
-{{--                            {{Form::close()}}--}}
-                            <a href="{{route('images.show', $image)}}" class="btn btn-info">
+{{--                            </a>--}}
+                            {{Form::open(['method'=>'DELETE', 'url'=>route('images.destroy', $image)])}}
+
+                            <button class="btn btn-danger btn-secondary">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            {{Form::close()}}
+                            <a href="{{route('images.show', $image)}}" class="btn btn-info btn-secondary">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </div>

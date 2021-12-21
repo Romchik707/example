@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('product-categories')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->unsignedBigInteger('image_id')->nullable();
-            $table->foreign('image_id')->references('id')->on('images')
+            $table->foreign('image_id')->references('id')->on('trait_images')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

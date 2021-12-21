@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use PhpParser\Node\Scalar\String_;
+use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
 
 /**
  * App\Models\Product
@@ -31,10 +33,16 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\ProductCategory|null $category
+ * @property-read \App\Models\Image|null $image
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Te7aHoudini\LaravelTrix\Models\TrixAttachment[] $trixAttachments
+ * @property-read int|null $trix_attachments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Te7aHoudini\LaravelTrix\Models\TrixRichText[] $trixRichText
+ * @property-read int|null $trix_rich_text_count
+ * @method static Builder|Product filter(array $frd)
  */
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTrixRichText;
 
     protected $table = 'products';
     protected $fillable = [
@@ -43,6 +51,7 @@ class Product extends Model
         'price',
         'category_id',
         'image_id',
+        'product-trixFields',
     ];
 
     /**
@@ -85,14 +94,50 @@ class Product extends Model
         return $query;
     }
 
+    /**
+     * @return HasOne
+     */
     public function category(): HasOne
     {
         return $this->hasOne(ProductCategory::class, 'id');
     }
 
+    /**
+     * @return ProductCategory
+     */
     public function getCategory(): ProductCategory
     {
         return $this->category;
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function image(): HasOne
+    {
+        return $this->hasOne(TraitImage::class, 'id', 'image_id');
+    }
+
+    /**
+     * @return Image|null
+     */
+    public function getImage(): ?TraitImage
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePicture(): string
+    {
+        $imagePicture = '';
+        $image = $this->getImage();
+//        dd($image);
+        if ($image !== null) {
+            $imagePicture = $image->getPicture();
+        }
+        return $imagePicture;
     }
 
     /**

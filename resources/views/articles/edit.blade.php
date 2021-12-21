@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                {{Form::model($product, ['url'=>route('products.update', $product), 'method'=>'PATCH'])}}
+                {{Form::model($article, ['url'=>route('articles.update', $article), 'method'=>'PATCH'])}}
 
-                @include('products._form', $product)
+                @include('articles._form', $article)
                 <div class="form-group">
                     Описание
                     {!!$article->trix('content')!!}

@@ -30,6 +30,7 @@ use Illuminate\Support\Collection;
  * @property-read \App\Models\ProductCategory|null $parentCategory
  * @property-read \App\Models\ProductCategory|null $childCategories
  * @property-read int|null $child_categories_count
+ * @method static Builder|ProductCategory filter(array $frd)
  */
 class ProductCategory extends Model
 {

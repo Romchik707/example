@@ -35,20 +35,20 @@
                         <div class="col-6">
                             {{$productCategory->getName()}}
                         </div>
-                        <div class="col-5">
-                            <a href="{{route('product-categories.edit', $productCategory)}}" class="btn btn-success">
+                        <div class="col-2 btn-group" role="group" aria-label="Basic example">
+                            <a href="{{route('product-categories.edit', $productCategory)}}" class="btn btn-success btn-secondary">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a href="{{route('product-categories.destroy', $productCategory)}}" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-{{--                            {{Form::open(['method'=>'DELETE', 'url'=>route('product-categories.destroy', $productCategory)])}}--}}
-
-{{--                            <button class="btn btn-danger">--}}
+{{--                            <a href="{{route('product-categories.destroy', $productCategory)}}" class="btn btn-danger">--}}
 {{--                                <i class="fas fa-trash-alt"></i>--}}
-{{--                            </button>--}}
-{{--                            {{Form::close()}}--}}
-                            <a href="{{route('product-categories.show', $productCategory)}}" class="btn btn-info">
+{{--                            </a>--}}
+                            {{Form::open(['method'=>'DELETE', 'url'=>route('product-categories.destroy', $productCategory)])}}
+
+                            <button class="btn btn-danger btn-secondary">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            {{Form::close()}}
+                            <a href="{{route('product-categories.show', $productCategory)}}" class="btn btn-info btn-secondary">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </div>
